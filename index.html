@@ -2,324 +2,504 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>每日看盘总结 - 2025年11月6日</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stocks Trends AI｜每日金融热点智能顾问</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --blue-1:#0047AB; --blue-2:#0096C7; --blue-3:#48CAE4; --blue-4:#ADE8F4; --blue-5:#CAF0F8;
-            --green:#008000; --red:#d90429; --amber:#b7791f;
+      :root {
+        color-scheme: light;
+        --bg: #0f172a;
+        --fg: #0b1120;
+        --text: #eef2ff;
+        --muted: #94a3b8;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.12);
+        --card: rgba(15, 23, 42, 0.8);
+        --border: rgba(148, 163, 184, 0.2);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 55%),
+          linear-gradient(180deg, #020617 0%, #0f172a 100%);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(18px);
+        background: rgba(2, 6, 23, 0.85);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav {
+        max-width: 1120px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.2rem 1.5rem;
+      }
+
+      .logo {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .logo span {
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 500;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 1.6rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav a {
+        color: var(--muted);
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: color 0.2s ease, opacity 0.2s ease;
+      }
+
+      nav a:hover {
+        color: var(--text);
+        opacity: 0.9;
+      }
+
+      main {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 5rem 1.5rem 6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 6rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.6rem, 5vw, 4.15rem);
+        line-height: 1.1;
+        margin: 0 0 1.5rem;
+      }
+
+      .hero p {
+        color: var(--muted);
+        max-width: 580px;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 2.2rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.85rem 1.6rem;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #02131d;
+        box-shadow: 0 12px 30px rgba(56, 189, 248, 0.35);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 18px 38px rgba(56, 189, 248, 0.45);
+      }
+
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: transparent;
+      }
+
+      .btn-outline:hover {
+        background: rgba(148, 163, 184, 0.12);
+        transform: translateY(-1px);
+      }
+
+      .btn-demo {
+        border: 1px solid rgba(56, 189, 248, 0.45);
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.08);
+      }
+
+      .btn-demo:hover {
+        background: rgba(56, 189, 248, 0.14);
+        transform: translateY(-1px);
+        color: var(--text);
+      }
+
+      .glass-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 2.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.45);
+      }
+
+      .signal {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        width: fit-content;
+      }
+
+      .section-tag {
+        color: var(--accent);
+        font-size: 0.82rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+        display: inline-block;
+      }
+
+      .section-title {
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+        margin-bottom: 1rem;
+      }
+
+      .section-desc {
+        color: var(--muted);
+        max-width: 640px;
+        line-height: 1.7;
+        margin-bottom: 2.2rem;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.8rem;
+      }
+
+      .feature {
+        padding: 1.8rem;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.6);
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+
+      .feature h3 {
+        font-size: 1.15rem;
+        margin: 0;
+      }
+
+      .feature p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .feature span {
+        font-size: 0.78rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .pricing {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2rem;
+      }
+
+      .price-card {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 2.2rem;
+        background: rgba(15, 23, 42, 0.65);
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+
+      .price-card h3 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+
+      .price-card strong {
+        font-size: 2rem;
+        display: block;
+      }
+
+      .price-card ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        color: var(--muted);
+      }
+
+      .price-card li::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 0.6rem;
+        border-radius: 50%;
+        background: var(--accent);
+        vertical-align: middle;
+      }
+
+      footer {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 4rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      footer span {
+        color: var(--text);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 1.4rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .footer-links a:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 720px) {
+        .nav {
+          flex-direction: column;
+          gap: 1rem;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif; background: #f8fafc; }
-        .stat-card { background:#fff; border-radius:12px; box-shadow: 0 6px 18px rgba(0,0,0,.06); padding:20px; }
-        .timeline-item { position:relative; padding:0 0 18px 28px; border-left:2px solid #ADE8F4; }
-        .timeline-item:last-child { border-left:2px solid transparent; padding-bottom:0; }
-        .timeline-marker { position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:#0096C7; border:2px solid #f8fafc; }
-        .timeline-time { font-size:.85rem; font-weight:600; color:#0047AB; }
-        .timeline-content { color:#333; margin-top:4px; }
-        .kpi-up { color:#008000; }
-        .kpi-down { color:#d90429; }
-        .wealth-card { background:#fff8e1; border:1px solid #ffe082; border-radius:12px; padding:16px; transition:.25s; }
-        .wealth-card:hover { box-shadow:0 10px 18px rgba(255,193,7,.25); transform:translateY(-2px); }
-        .wealth-title { font-weight:700; color:#b7791f; }
-        .muted { color:#64748b; }
-        @media (max-width:640px){ .timeline-item{ padding-left:22px; } .timeline-marker{ left:-6px; } }
+
+        nav ul {
+          gap: 1rem;
+        }
+
+        .hero-actions {
+          width: 100%;
+        }
+
+        .hero-actions .btn {
+          flex: 1;
+        }
+      }
     </style>
 </head>
+
 <body>
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-6 py-6 text-center">
-            <h1 class="text-3xl font-bold" style="color:var(--blue-1)">每日看盘总结：2025年11月6日</h1>
-            <p class="text-lg text-gray-600 mt-2">沪指收复4000点，算力硬件与电网设备双核驱动，量能充沛</p>
+    <header>
+        <div class="nav">
+            <div class="logo">
+                Stocks Trends AI
+                <span>专注热点</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#features">特性</a></li>
+                    <li><a href="#pricing">价格</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-
-    <main class="container mx-auto px-6 py-8 space-y-10">
-        <!-- 概览KPI -->
-        <section id="kpi">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="stat-card text-center">
-                    <div class="text-3xl font-bold kpi-up">创业板 +2.00%</div>
-                    <div class="text-sm text-gray-600 mt-2">成长风格占优</div>
-                </div>
-                <div class="stat-card text-center">
-                    <div class="text-3xl font-bold" style="color:var(--blue-1)">沪指 +0.89%</div>
-                    <div class="text-sm text-gray-600 mt-2">收复4000点</div>
-                </div>
-                <div class="stat-card text-center">
-                    <div class="text-3xl font-bold">深成 +1.72%</div>
-                    <div class="text-sm text-gray-600 mt-2">量价齐升</div>
-                </div>
-                <div class="stat-card text-center">
-                    <div class="text-3xl font-bold" style="color:var(--amber)">1.5万亿+</div>
-                    <div class="text-sm text-gray-600 mt-2">沪深成交额突破</div>
+    <main>
+        <section id="home" class="hero">
+            <div>
+                <div class="signal">每日市场洞察</div>
+                <h1>为投资者打造的每日热点与趋势智能分析助手</h1>
+                <p>
+                    Stocks Trends AI 汇聚全球金融新闻、社交舆情与市场指标，实时分析潜在影响，生成可执行的投资洞察与未来走势研判，帮助你在瞬息万变的市场中领先一步。
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#pricing">立即试用</a>
+                    <a class="btn btn-outline" href="#features">查看能力</a>
+                    <a class="btn btn-demo" href="./20251106/after.html">DEMO</a>
                 </div>
             </div>
-        </section>
-
-        <!-- 时间线信息图 -->
-        <section id="timeline" class="space-y-6">
-            <h2 class="text-2xl font-semibold text-center" style="color:var(--blue-2)">盘面时间线（要点回顾）</h2>
-            <div class="stat-card">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">08:00</div>
-                            <div class="timeline-content">早间精选：中美农业与经贸交流、固态电池2030年需求展望、茅台回购与分红、OpenAI暂无IPO计划等。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">09:53</div>
-                            <div class="timeline-content">磷化工拉升，黄磷指数两周边涨超7%；芭田股份涨停，清水源、澄星股份触及涨停。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">09:59</div>
-                            <div class="timeline-content">冰雪产业概念回落，大连圣亚跌停，长白山、凯撒旅业等跟跌。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">10:03</div>
-                            <div class="timeline-content">电力板块走强，乐山电力涨停，闽东电力一字涨停；国网公示采购中标名单，投资延续高增。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">10:14</div>
-                            <div class="timeline-content">机器人概念异动，万向钱潮直线涨停；小鹏人形机器人IRON将量产预期点燃赛道。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">10:25</div>
-                            <div class="timeline-content">算力芯片反弹，海光信息涨超7%；弗若斯特沙利文预计中国AI芯片2025-2029年CAGR约54%。</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">10:42</div>
-                            <div class="timeline-content">证券板块走强，沪指重回4000点；电网设备反复走强，特变电工触及涨停续创新高。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">11:09</div>
-                            <div class="timeline-content">半导体设备回暖，金海通涨停；大同证券称存储需求有望拉动资本开支与设备需求。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">11:27</div>
-                            <div class="timeline-content">电解铝异动，中国铝业逼近涨停创15年新高；表观需求好于预期，利润维持高位。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">11:32</div>
-                            <div class="timeline-content">午评：沪指涨近1%收复4000点，半日成交1.32万亿，化工、磷化工、工业金属等涨幅居前。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">13:27</div>
-                            <div class="timeline-content">算力硬件持续走强，东山精密、汇绿生态涨停；美股Lumentum、Coherent财报亮眼提振CPO预期。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">13:49</div>
-                            <div class="timeline-content">重庆本地股异动，重庆建工直线涨停；重庆部分行政区划调整消息催化。</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-time">14:01</div>
-                            <div class="timeline-content">创业板指涨逾2%，算力硬件反弹，磷化工、半导体芯片、燃气轮机等涨幅居前；上涨个股近2800只。</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="glass-card">
+            <span class="section-tag">即时摘要</span>
+            <h2 class="section-title">今日焦点概览</h2>
+            <p>
+                生成式 AI 聚合宏观新闻、行业热词与板块资金流向，量化多维指标，识别被忽视的驱动因子。
+            </p>
+            <div>
+            <span class="section-tag">潜在影响</span>
+            <p>
+                AI 自动评估新闻热度与股价相关性，并给出短中期趋势信号，形成可追踪的操作建议列表。
+            </p>
             </div>
-        </section>
-
-        <!-- 图表可视化 -->
-        <section id="charts">
-            <h2 class="text-2xl font-semibold text-center" style="color:var(--blue-2)">关键数据可视化</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 主力资金板块流向 -->
-                <div class="stat-card">
-                    <h3 class="text-xl font-semibold mb-2 text-center">主力资金板块流向（预估）</h3>
-                    <p class="text-sm text-gray-600 mb-4 text-center">流入：电网设备/CPO/化工/铝/电力；流出：半导体设备/算力芯片/冰雪产业</p>
-                    <div class="h-80">
-                        <canvas id="fundingFlowChart"></canvas>
-                    </div>
-                </div>
-                <!-- 涨停结构 -->
-                <div class="stat-card">
-                    <h3 class="text-xl font-semibold mb-2 text-center">涨停结构（午间）</h3>
-                    <p class="text-sm text-gray-600 mb-4 text-center">共47股涨停，11只连板；主线延续，新分支加速</p>
-                    <div class="h-80">
-                        <canvas id="limitUpChart"></canvas>
-                    </div>
-                </div>
-                <!-- 指数表现 -->
-                <div class="stat-card">
-                    <h3 class="text-xl font-semibold mb-2 text-center">主要指数表现（当日）</h3>
-                    <p class="text-sm text-gray-600 mb-4 text-center">沪指收复4000点，深成与创业板强势</p>
-                    <div class="h-80">
-                        <canvas id="indexChart"></canvas>
-                    </div>
-                </div>
-                <!-- 量能 -->
-                <div class="stat-card">
-                    <h3 class="text-xl font-semibold mb-2 text-center">量能追踪</h3>
-                    <p class="text-sm text-gray-600 mb-4 text-center">首小时放量1326亿，半日1.32万亿；预计全天2万亿+</p>
-                    <div class="h-80">
-                        <canvas id="volumeChart"></canvas>
-                    </div>
-                </div>
+            <div>
+            <span class="section-tag">执行指导</span>
+            <p>
+                提供风险提示、关键价位与仓位建议，辅以自动化通知，确保策略与市场同步。
+            </p>
             </div>
+            </div>
+            </section>
+
+    <section id="features">
+        <span class="section-tag">平台能力</span>
+        <h2 class="section-title">融合舆情洞察与量化分析的双引擎</h2>
+        <p class="section-desc">
+            Stocks Trends AI 专为主动投资者设计，将大型语言模型与量化算法结合，从新闻热度到价格行为提供全链路支持，帮助你精准捕捉热点驱动力。
+        </p>
+        <div class="features-grid">
+            <div class="feature">
+                <span>01</span>
+                <h3>热点新闻聚焦</h3>
+                <p>实时扫描媒体与社交平台，识别行业热点与情绪波动，生成风险和机会提要。</p>
+            </div>
+        <div class="feature">
+            <span>02</span>
+            <h3>走势协同分析</h3>
+            <p>结合多因子模型，测算价格动量、成交量结构与资金流向，输出趋势判断。</p>
+        </div>
+        <div class="feature">
+            <span>03</span>
+            <h3>智能策略建议</h3>
+            <p>自动生成入场、止损、加仓参考，并根据市场反馈动态调优。</p>
+        </div>
+        <div class="feature">
+            <span>04</span>
+            <h3>多渠道通知</h3>
+            <p>支持邮件、短信、Telegram 推送，确保关键变动第一时间触达。</p>
+        </div>
+        </div>
         </section>
 
-        <!-- 操作建议 -->
-        <section id="suggestions">
-            <h2 class="text-2xl font-semibold text-center" style="color:var(--blue-2)">今日操作建议</h2>
-            <div class="stat-card">
-                <ul class="list-disc list-inside space-y-3 text-gray-800 text-lg">
-                    <li><strong>顺势而为，拥抱主线：</strong> 算力硬件（CPO/光模块/PCB）与电网设备（智能电网/电力电子）是双核心赛道，趋势强、延续性好，择强低吸。</li>
-                    <li><strong>量价共振优先：</strong> 量能持续放大（1.5万亿+、预计2万亿+），优先选择放量突破或沿5/10日线走强的标的，规避缩量博弈。</li>
-                    <li><strong>卫星仓配置：</strong> 电解铝、化工（磷化工）、半导体设备作为主线外的轮动补充，逢低布局业绩与政策共振的细分龙头。</li>
-                    <li><strong>节奏控制：</strong> 短线情绪有分歧，连板率高但封板率约69%，避免追高缩量高位票，优先低吸回踩中枢票。</li>
-                    <li><strong>风险提示：</strong> 规避冰雪产业等回落板块；减持、解禁与负面事件标的列入观察清单（财报/公告后再定）。</li>
+    <section class="cta">
+        <div class="glass-card">
+            <span class="section-tag">行动</span>
+            <h2 class="section-title">以数据驱动你的下一个决策</h2>
+            <p class="section-desc">
+                7 天试用即享每日两次完整热点研判，体验从洞察到执行的自动化流程，将碎片化信息转化为清晰的市场路线图。
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="#pricing">开始试用</a>
+                <a class="btn btn-outline" href="mailto:hello@stockstrends.ai">预约演示</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <span class="section-tag">价格方案</span>
+        <h2 class="section-title">选择适合你的分析深度</h2>
+        <div class="pricing">
+            <div class="price-card">
+                <h3>入门计划</h3>
+                <strong>￥199 / 月</strong>
+                <p>每日热点摘要＋关键舆情指标，适合短线交易者。</p>
+                <ul>
+                    <li>每日双次热点报告</li>
+                    <li>核心板块资金流向</li>
+                    <li>Telegram / 邮件通知</li>
                 </ul>
+                <a class="btn btn-outline" href="#">立即订阅</a>
             </div>
+        <div class="price-card">
+            <h3>专业计划</h3>
+            <strong>￥399 / 月</strong>
+            <p>深度走势分析与策略建议，为高频决策提供支持。</p>
+            <ul>
+                <li>独家多因子评分</li>
+                <li>自动策略调优</li>
+                <li>自定义行业监控</li>
+            </ul>
+            <a class="btn btn-primary" href="#">立即升级</a>
+        </div>
+        <div class="price-card">
+            <h3>机构计划</h3>
+            <strong>联系我们</strong>
+            <p>定制数据接口与协同工作流程，满足团队化需求。</p>
+            <ul>
+                <li>专属研究顾问</li>
+                <li>API 数据接入</li>
+                <li>白标化品牌支持</li>
+            </ul>
+            <a class="btn btn-outline" href="mailto:enterprise@stockstrends.ai">预约沟通</a>
+        </div>
+        </div>
         </section>
-
-        <!-- 财富密码 -->
-        <section id="wealth-code">
-            <h2 class="text-2xl font-semibold text-center" style="color:var(--amber)">财富密码</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="wealth-card">
-                    <div class="wealth-title mb-2">1. 算力硬件链（CPO/光模块/PCB/光芯片）</div>
-                    <p class="text-gray-800">海外财报（Lumentum、Coherent）超预期，CPO链条景气度提升；国内东山精密、汇绿生态已打样，PCB与光器件受益AI资本开支周期。建议沿5/10日线低吸核心标的。</p>
-                </div>
-                <div class="wealth-card">
-                    <div class="wealth-title mb-2">2. 电网设备与电力（智能电网/特高压/设备龙头）</div>
-                    <p class="text-gray-800">IEA预计全球电网年均投资至2030年近8000亿美元；国内国网投资延续高增。特变电工、中国西电、正泰电器等趋势强，回踩均线积极布局。</p>
-                </div>
-                <div class="wealth-card">
-                    <div class="wealth-title mb-2">3. 铝与大宗（电解铝/工业金属）</div>
-                    <p class="text-gray-800">电解铝表观需求好于预期、利润高位，叠加能源成本支撑。中国铝业创15年新高，关注神火股份、云铝股份等低位补涨。</p>
-                </div>
-                <div class="wealth-card">
-                    <div class="wealth-title mb-2">4. 机器人与AI边缘应用</div>
-                    <p class="text-gray-800">小鹏IRON量产预期点燃机器人赛道，万向钱潮、五洲新春涨停。关注核心部件（减速器、伺服、控制器）与场景落地标的。</p>
-                </div>
-                <div class="wealth-card">
-                    <div class="wealth-title mb-2">5. 化工与磷化工（湿法磷酸/黄磷/磷酸铁锂链）</div>
-                    <p class="text-gray-800">黄磷涨价与湿法磷酸减产驱动，芭田股份、澄星股份涨停。关注云天化、兴发集团、川恒股份等具备资源与成本优势的龙头。</p>
-                </div>
-                <div class="wealth-card">
-                    <div class="wealth-title mb-2">6. 风险与避雷</div>
-                    <p class="text-gray-800">规避冰雪旅游及产业链回撤标的；关注减持/解禁与负面公告（研报、财报披露后再择机）。缩量震荡中严控仓位，避免情绪化追涨。</p>
-                </div>
-            </div>
-        </section>
-
-        <footer class="text-center py-6 bg-white border-t mt-10 rounded-xl">
-            <p class="text-sm text-gray-600">数据来源：财联社RSS（2025-11-06）。图表为可视化辅助，不构成投资建议。</p>
-        </footer>
     </main>
-
+    <footer>
+        <span>© <span id="year"></span> Stocks Trends AI. All rights reserved.</span>
+        <div class="footer-links">
+            <a href="#features">特性</a>
+            <a href="#pricing">价格</a>
+            <a href="mailto:support@stockstrends.ai">联系我们</a>
+            <a href="#">服务协议</a>
+            <a href="#">隐私政策</a>
+        </div>
+    </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const colors = {
-                blue1:'#0047AB', blue2:'#0096C7', blue3:'#48CAE4', blue4:'#ADE8F4',
-                green:'#008000', red:'#d90429', amber:'#b7791f'
-            };
-            const processLabels = (labels, maxLen=12) => labels.map(l => (l.length>maxLen? (l.length>24? l.slice(0,20)+'…' : l.slice(0,12)+'…') : l));
-
-            // 1) 主力资金板块流向
-            const inflowLabels = ['电网设备','CPO/光模块','电解铝','化工','磷化工','电力','机器人','证券'];
-            const inflowData = [45,30,28,22,20,18,15,10];
-            const outflowLabels = ['半导体设备','算力芯片','冰雪产业','旅游酒店'];
-            const outflowData = [-15,-12,-8,-5];
-
-            const fundingCtx = document.getElementById('fundingFlowChart').getContext('2d');
-            new Chart(fundingCtx, {
-                type:'bar',
-                data:{
-                    labels:processLabels([...inflowLabels.map(v=>'+ '+v), ...outflowLabels.map(v=>'- '+v)]),
-                    datasets:[{
-                        label:'净流入/流出(亿元)',
-                        data:[...inflowData, ...outflowData],
-                        backgroundColor:(ctx)=>ctx.dataset.data[ctx.dataIndex]>=0? colors.blue1: colors.green,
-                        borderColor:(ctx)=>ctx.dataset.data[ctx.dataIndex]>=0? colors.blue1: colors.green,
-                        borderWidth:1
-                    }]
-                },
-                options:{
-                    responsive:true, maintainAspectRatio:false,
-                    indexAxis:'y',
-                    scales:{
-                        x:{ title:{display:true,text:'亿元'} }
-                    },
-                    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ title:(items)=>items[0].label.replace(/^\+\s?/,'').replace(/^\-\s?/,'') } } }
-                }
-            });
-
-            // 2) 涨停结构（饼图）
-            const limitCtx = document.getElementById('limitUpChart').getContext('2d');
-            new Chart(limitCtx, {
-                type:'doughnut',
-                data:{
-                    labels:['连板','首板'],
-                    datasets:[{
-                        data:[11,36],
-                        backgroundColor:[colors.blue1, colors.blue3],
-                        hoverBackgroundColor:[colors.blue2, colors.blue4]
-                    }]
-                },
-                options:{
-                    responsive:true, maintainAspectRatio:false, cutout:'60%',
-                    plugins:{ legend:{position:'bottom'} }
-                }
-            });
-
-            // 3) 指数表现
-            const indexCtx = document.getElementById('indexChart').getContext('2d');
-            new Chart(indexCtx, {
-                type:'bar',
-                data:{
-                    labels:processLabels(['创业板指','深成指','沪指']),
-                    datasets:[{
-                        label:'涨跌幅(%)',
-                        data:[2.00, 1.72, 0.89],
-                        backgroundColor:[colors.blue2, colors.blue3, colors.blue1],
-                        borderWidth:1
-                    }]
-                },
-                options:{
-                    responsive:true, maintainAspectRatio:false,
-                    scales:{ y:{ beginAtZero:true, max:2.5, ticks:{ callback:(v)=>v+'%' } } },
-                    plugins:{ legend:{display:false} }
-                }
-            });
-
-            // 4) 量能（首小时/半日/全天预估）
-            const volCtx = document.getElementById('volumeChart').getContext('2d');
-            new Chart(volCtx, {
-                type:'bar',
-                data:{
-                    labels:processLabels(['首小时放量','半日成交','全天预估']),
-                    datasets:[{
-                        label:'成交额(亿元)',
-                        data:[1326,13200,20000],
-                        backgroundColor:[colors.blue4, colors.blue3, colors.blue1],
-                        borderWidth:1
-                    }]
-                },
-                options:{
-                    responsive:true, maintainAspectRatio:false,
-                    scales:{ y:{ beginAtZero:true, max:25000 } },
-                    plugins:{ legend:{display:false} }
-                }
-            });
-        });
+                    document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 </body>
-</html>	
+
+</html>
+
