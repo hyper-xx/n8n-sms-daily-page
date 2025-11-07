@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>每日看盘 - 2025年11月7日 | 财联社电报复盘</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --brand: #0E3A8A;
+    --brand-2: #0EA5E9;
+    --brand-3: #38BDF8;
+    --good: #16a34a;
+    --bad: #dc2626;
+    --paper: #ffffff;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+    background: #f3f4f6;
+    color: #0f172a;
+  }
+  .card {
+    background: var(--paper);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(2,6,23,0.08);
+    padding: 1.25rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    background: #e0f2fe;
+    color: #075985;
+    margin-right: 0.4rem;
+  }
+  .chip.up { background: #dcfce7; color: #166534; }
+  .chip.down { background: #fee2e2; color: #991b1b; }
+  .muted { color: #64748b; }
+  .kpi {
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+  .kpi.up { color: var(--good); }
+  .kpi.down { color: var(--bad); }
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.6rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(var(--brand-3), #bae6fd);
+  }
+  .t-item {
+    position: relative;
+    padding-bottom: 1rem;
+  }
+  .t-item::before {
+    content: "";
+    position: absolute;
+    left: -0.25rem;
+    top: 0.2rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--brand-2);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #e0f2fe;
+  }
+  .t-time { font-weight: 700; color: var(--brand); }
+  .t-desc { color: #0f172a; }
+  .wealth {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+  }
+  .wealth h3 { color: #b45309; }
+  .wealth:hover { box-shadow: 0 6px 16px rgba(251,146,60,0.25); transform: translateY(-2px); }
+  .chart-box { height: 320px; }
+  @media (min-width: 1024px) {
+    .chart-box { height: 360px; }
+  }
+  .subtext { font-size: 0.9rem; color: #475569; }
+</style>
+</head>
+<body>
+<header class="bg-white shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 py-6 text-center">
+    <h1 class="text-3xl font-black" style="color: var(--brand);">每日看盘 · 2025年11月7日</h1>
+    <p class="text-lg text-slate-600 mt-1">缩量震荡，化工锂电走强；连板晋级率回落，资金抱团加剧</p>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-6 space-y-8">
+  <!-- KPI -->
+  <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="card text-center">
+      <div class="kpi up">53</div>
+      <div class="muted">涨停家数</div>
+      <div class="subtext">不含ST、退市</div>
+    </div>
+    <div class="card text-center">
+      <div class="kpi">12</div>
+      <div class="muted">连板总数</div>
+      <div class="subtext">三连板及以上 4 只</div>
+    </div>
+    <div class="card text-center">
+      <div class="kpi">36%</div>
+      <div class="muted">连板晋级率</div>
+      <div class="subtext">较前一日略升，短线分化</div>
+    </div>
+    <div class="card text-center">
+      <div class="kpi">2.00<span class="text-lg">万亿</span></div>
+      <div class="muted">两市成交额</div>
+      <div class="subtext">较前一交易日缩量 562 亿</div>
+    </div>
+  </section>
+
+  <!-- 时间线 -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold" style="color: var(--brand);">看盘时间线</h2>
+      <div class="space-x-2">
+        <span class="chip up">连板</span>
+        <span class="chip">化工</span>
+        <span class="chip">锂电</span>
+        <span class="chip down">机器人</span>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-time">08:36</div>
+        <div class="t-desc">“股市避雷针”：拟减持公司数较前减少；多家公司解禁压力大；合富中国交易放量明显，击鼓传花效应显著。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">08:47</div>
+        <div class="t-desc">两市融资余额增加 70.22 亿元，杠杆资金小幅回流。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">09:46</div>
+        <div class="t-desc">存储芯片局部活跃，德明利触及涨停创历史新高。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">09:53</div>
+        <div class="t-desc">电网设备反复活跃，中能电气触及 20cm 涨停；摩恩电气 4 连板。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:15</div>
+        <div class="t-desc">化工板块走强，黄磷、氯化亚砜涨价驱动，清水源两连板。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:21</div>
+        <div class="t-desc">光伏概念持续走强，多晶硅“联合体”平台在筹，通威股份涨停。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:39</div>
+        <div class="t-desc">商业航天异动拉升，上海沪工直线涨停。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:53</div>
+        <div class="t-desc">PEEK材料概念震荡走强，中欣氟材涨停。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:58</div>
+        <div class="t-desc">CPO概念局部回暖，天孚通信涨超 15%。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">11:33</div>
+        <div class="t-desc">午评：沪指半日跌 0.16%，化工集体爆发，澄星股份、清水源等多股涨停。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">12:00</div>
+        <div class="t-desc">港股午评：恒指跌 1.14%，科技股普跌。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">13:08</div>
+        <div class="t-desc">锂电池持续走强，十余只成分股涨停；电解液、磷酸铁锂方向领涨。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">13:56</div>
+        <div class="t-desc">机器人概念持续调整，恒帅股份跌超 10%。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">14:00</div>
+        <div class="t-desc">福建本地股再走强，漳州发展涨停。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">14:07</div>
+        <div class="t-desc">快评：连板晋级率连续两日低至 30%；题材轮动强度一般。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">14:23</div>
+        <div class="t-desc">主力资金监控：电子板块净流出超 98 亿，天孚通信净买入 22.94 亿。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">15:02</div>
+        <div class="t-desc">闻泰科技尾盘直线拉升，逼近涨停，最后 5 分钟成交超 12 亿；收评：沪指跌 0.25%，创业板指跌 0.51%。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 图表 -->
+  <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card">
+      <h3 class="text-lg font-semibold mb-2" style="color: var(--brand);">主力资金板块流向</h3>
+      <p class="subtext mb-3">电子、计算机等资金承压，基础化工、电新、能源金属获青睐。</p>
+      <div class="chart-box"><canvas id="fundFlow"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 class="text-lg font-semibold mb-2" style="color: var(--brand);">涨停结构拆解</h3>
+      <p class="subtext mb-3">连板数量稳定但晋级率偏低，短线情绪分化。</p>
+      <div class="chart-box"><canvas id="limitUp"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 class="text-lg font-semibold mb-2" style="color: var(--brand);">成交额追踪</h3>
+      <p class="subtext mb-3">缩量 562 亿至 2.00 万亿，存量博弈明显。</p>
+      <div class="chart-box"><canvas id="volume"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 class="text-lg font-semibold mb-2" style="color: var(--brand);">板块强度雷达</h3>
+      <p class="subtext mb-3">化工、锂电持续性靠前；机器人、AI应用走弱。</p>
+      <div class="chart-box"><canvas id="radar"></canvas></div>
+    </div>
+  </section>
+
+  <!-- 操作建议 -->
+  <section class="card">
+    <h2 class="text-xl font-semibold mb-4" style="color: var(--brand);">今日操作建议</h2>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>仓位控制：</strong> 成交额回落至 2.0 万亿，热点杂乱，建议总仓 5-6 成，预留机动应对轮动。</li>
+      <li><strong>抱团主线：</strong> 化工（磷化工/氟化工/有机硅）与锂电（电解液/磷酸铁锂）有基本面与价格共振，继续围绕龙头与高标低吸。</li>
+      <li><strong>新逻辑：</strong> AI 算力“电力瓶颈”扩散至电网设备、电网改造方向，叠加政策/业绩预期，注意节奏（分歧低吸、追高谨慎）。</li>
+      <li><strong>避雷区：</strong> 机器人板块连续调整，AI 软件链资金承压，缩量环境下弱势题材易踩踏；连板高标放量分歧时及时止盈。</li>
+    </ul>
+  </section>
+
+  <!-- 财富密码 -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-semibold" style="color: #b45309;">财富密码 🚀</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="wealth card">
+        <h3 class="font-bold mb-2">化工（磷/氟/有机硅）</h3>
+        <p class="subtext">黄磷、氯化亚砜等原料上涨推动，清水源、澄星股份等强化趋势；关注补涨（氟化工/硅材料）与“低位放量+换手”标的。</p>
+      </div>
+      <div class="wealth card">
+        <h3 class="font-bold mb-2">锂电（电解液/磷酸铁锂/锂矿）</h3>
+        <p class="subtext">旺季排产提升+储能涨价，天赐材料、多氟多、天际股份等高景气延续；优先选“价格敏感度高的环节”。</p>
+      </div>
+      <div class="wealth card">
+        <h3 class="font-bold mb-2">电网设备与“AI 电力”</h3>
+        <p class="subtext">算力转向“缺电”，电网设备、智能电网、电源配套分支扩散；上海沪工、中能电气、广电电气、金盘科技、思源电气等观察分歧时低吸。</p>
+      </div>
+      <div class="wealth card">
+        <h3 class="font-bold mb-2">多晶硅“联合体”</h3>
+        <p class="subtext">平台筹划中、700 亿规模基金预期发酵，通威股份、合盛硅业、大全能源等情绪提振，右侧放量跟进。</p>
+      </div>
+      <div class="wealth card">
+        <h3 class="font-bold mb-2">福建自贸/本地股</h3>
+        <p class="subtext">政策预期反复叠加短线情绪轮动，漳州发展、合富中国、平潭发展等，留意换手与承接力，分歧中找低吸点。</p>
+      </div>
+      <div class="wealth card">
+        <h3 class="font-bold mb-2">PEEK/商业航天</h3>
+        <p class="subtext">题材事件驱动，中欣氟材、上海沪工等，但弹性大、节奏快，适合小仓做 T 或低吸反包，严格止盈止损。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="text-center text-sm text-slate-500 py-6">
+  <p>基于财联社RSS公开信息整理，不构成投资建议</p>
+</footer>
+
+<script>
+  const brand = { blue: '#0E3A8A', sky: '#0EA5E9', sky2:'#38BDF8', sky3:'#93C5FD', green:'#16a34a', red:'#dc2626' };
+  function wrapText(ctx, text, maxWidth) {
+    return text.length > 10 ? (text.match(new RegExp('.{1,' + Math.floor(maxWidth/8) + '}', 'g')) || [text]) : [text];
+  }
+
+  // 主力资金板块流向（单位：亿元）
+  const fundFlowEl = document.getElementById('fundFlow');
+  if (fundFlowEl) {
+    new Chart(fundFlowEl.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['电子', '计算机', '机械设备', '基础化工', '电新', '能源金属'],
+        datasets: [{
+          label: '主力资金净流入(亿元)',
+          data: [-98, -74, -35, 30, 25, 15],
+          backgroundColor: (ctx) => ctx.dataset.data[ctx.dataIndex] < 0 ? brand.red : brand.green,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { title: { display: true, text: '亿元' } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (item) => ` ${item.parsed.x} 亿元`
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // 涨停板结构（简化拆解：连板/首板）
+  const limitUpEl = document.getElementById('limitUp');
+  if (limitUpEl) {
+    new Chart(limitUpEl.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['连板股(12)', '首板(41)'],
+        datasets: [{
+          data: [12, 41],
+          backgroundColor: [brand.blue, brand.sky3],
+          hoverBackgroundColor: [brand.sky, brand.sky2]
+        }]
+      },
+      options: {
+        cutout: '62%',
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ` ${ctx.label}: ${ctx.parsed} 只`
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // 成交额对比
+  const volumeEl = document.getElementById('volume');
+  if (volumeEl) {
+    new Chart(volumeEl.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['前一日', '当日'],
+        datasets: [{
+          label: '成交额(万亿元)',
+          data: [2.0562, 2.0000],
+          backgroundColor: [brand.sky3, brand.sky],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: '万亿元' }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ` ${ctx.parsed.y.toFixed(4)} 万亿元`
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // 板块强度雷达
+  const radarEl = document.getElementById('radar');
+  if (radarEl) {
+    new Chart(radarEl.getContext('2d'), {
+      type: 'radar',
+      data: {
+        labels: ['化工', '锂电', '电网设备', '福建', '光伏', 'CPO/光通信', '机器人(弱)', 'AI应用(弱)'],
+        datasets: [{
+          label: '板块强度(1-10)',
+          data: [9, 9, 7, 6, 7, 6, 2, 3],
+          fill: true,
+          backgroundColor: 'rgba(14,165,233,0.18)',
+          borderColor: brand.sky,
+          pointBackgroundColor: brand.sky
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 10,
+            ticks: { stepSize: 2 }
+          }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+  }
+</script>
+</body>
+</html>	
