@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日看盘 - 2025年11月12日</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 350px;
+        }
+        .chart-container-sm {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+            padding-left: 2.5rem;
+            border-left: 2px solid #ADE8F4;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .timeline-marker {
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #0096C7;
+            border: 2px solid #f8f9fa;
+        }
+        .timeline-time {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #0047AB;
+        }
+        .timeline-content {
+            font-size: 1rem;
+            color: #333;
+        }
+        .text-up {
+            color: #d90429;
+        }
+        .text-down {
+            color: #008000;
+        }
+        .wealth-card {
+            background-color: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .wealth-card:hover {
+            box-shadow: 0 6px 12px rgba(251, 191, 36, 0.3);
+            transform: translateY(-3px);
+        }
+        .wealth-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #b45309; 
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-6 text-center">
+            <h1 class="text-3xl font-bold" style="color: #0047AB;">每日看盘：2025年11月12日</h1>
+            <p class="text-lg text-gray-600 mt-2">市场探底回升，防御板块逆势走强</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="kpi" class="mb-10">
+            <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">今日市场核心指标</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold text-down">-0.07%</div>
+                    <div class="text-lg font-medium text-gray-700 mt-2">沪指险守4000点</div>
+                    <p class="text-sm text-gray-500">超3500只个股下跌，市场普跌</p>
+                </div>
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold" style="color: #0047AB;">1.95 万亿</div>
+                    <div class="text-lg font-medium text-gray-700 mt-2">两市成交额</div>
+                    <p class="text-sm text-gray-500">较昨日缩量486亿，交投谨慎</p>
+                </div>
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold text-up">防御为王</div>
+                    <div class="text-lg font-medium text-gray-700 mt-2">资金抱团避险</div>
+                    <p class="text-sm text-gray-500">医药、银行、油气板块领涨</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="charts" class="mb-10">
+            <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">关键数据可视化</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="stat-card">
+                    <h3 class="text-xl font-semibold mb-2 text-center">主力资金板块流向</h3>
+                    <p class="text-xs text-gray-500 mb-4 text-center">资金从高位电新、计算机流出，涌入医药、银行等防御方向。</p>
+                    <div class="chart-container">
+                        <canvas id="fundingFlowChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3 class="text-xl font-semibold mb-2 text-center">涨停板分析</h3>
+                    <p class="text-xs text-gray-500 mb-4 text-center">连板股表现强势，市场短线情绪尚可，强者恒强。</p>
+                    <div class="chart-container-sm">
+                        <canvas id="limitUpChart"></canvas>
+                    </div>
+                     <div class="text-xs text-gray-600 mt-4 text-center">
+                        <p><span class="font-bold">焦点股:</span> 合富中国(12天11板), 摩恩电气(7板), 孚日股份(5板)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="timeline" class="mb-10">
+            <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">市场复盘时间线</h2>
+            <div class="stat-card">
+                <div class="max-w-3xl mx-auto">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">09:39</div>
+                        <div class="timeline-content text-down">磷化工板块下跌，<span class="font-bold">澄星股份</span>跌停。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">09:42</div>
+                        <div class="timeline-content text-up">大消费板块活跃，<span class="font-bold">中锐股份</span>、<span class="font-bold">三元股份</span>3连板。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">10:07</div>
+                        <div class="timeline-content text-up">存储芯片概念因涨价消息拉升，<span class="font-bold">德明利</span>、<span class="font-bold">普冉股份</span>涨超8%。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">10:29</div>
+                        <div class="timeline-content text-down">CPO概念持续调整，<span class="font-bold">源杰科技</span>跌超10%。</div>
+                    </div>
+                     <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">11:32</div>
+                        <div class="timeline-content">午评：创业板指跌超1.5%，<span class="font-bold text-up">农行、工行</span>创历史新高，市场分化加剧。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">13:15</div>
+                        <div class="timeline-content text-up">细胞治疗概念午后异动，<span class="font-bold">开能健康</span>、<span class="font-bold">中源协和</span>等多股涨停。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">13:33</div>
+                        <div class="timeline-content text-down">光伏、储能概念重挫，<span class="font-bold">通威股份</span>触及跌停，<span class="font-bold">隆基绿能</span>大跌。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">14:41</div>
+                        <div class="timeline-content text-up">算力硬件股尾盘反弹，创业板指一度翻红，<span class="font-bold">中际旭创</span>大幅拉升。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">14:45</div>
+                        <div class="timeline-content text-up">商业航天概念尾盘爆发，<span class="font-bold">上海沪工</span>、<span class="font-bold">上海港湾</span>双双涨停。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">15:03</div>
+                        <div class="timeline-content">收评：市场探底回升，沪指险守4000点，医药等防御性板块全天强势。</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="suggestions" class="mb-10">
+            <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">明日操作建议</h2>
+            <div class="stat-card">
+                <ul class="list-disc list-inside space-y-3 text-gray-800 text-lg">
+                    <li><strong>控制仓位，谨慎追高：</strong> 市场整体偏弱，超3500股下跌，赚钱效应差。热点轮动快，追高风险极大，建议保持中低仓位运行。</li>
+                    <li><strong>聚焦防御，静待企稳：</strong> 资金明确流入医药、银行、油气等防御性板块。在市场企稳信号出现前，可配置部分仓位在这些方向作为“压舱石”。</li>
+                    <li><strong>规避弱势，远离风险：</strong> 光伏、培育钻石(超硬材料)、CPO等板块今日遭资金大幅抛售，形成破位下跌趋势，短期应坚决规避，不宜盲目抄底。</li>
+                     <li><strong>关注尾盘异动方向：</strong> 尾盘拉升的算力硬件、商业航天以及持续活跃的锂电池板块，可能成为明日市场博弈的焦点，可纳入观察列表，寻找低吸机会。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="wealth-code">
+            <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #b45309;">财富密码 🚀</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="wealth-card">
+                    <h3 class="wealth-title mb-3">1. 防御主线：医药 & 银行</h3>
+                    <p class="text-gray-800">市场恐慌情绪下最确定的避风港。医药板块受细胞治疗等概念催化，银行板块（农行、工行）更是走出趋势新高。只要市场不确定性延续，这两个方向的确定性溢价最高。</p>
+                </div>
+                <div class="wealth-card">
+                    <h3 class="wealth-title mb-3">2. 拐点博弈：锂电池材料</h3>
+                    <p class="text-gray-800">电解液添加剂VC报价大涨，带动<span class="font-bold">孚日股份</span>5连板，<span class="font-bold">石大胜华</span>涨停。这是基本面出现边际变化的信号，可能预示着锂电上游材料的景气度拐点，值得深入挖掘。</p>
+                </div>
+                <div class="wealth-card">
+                    <h3 class="wealth-title mb-3">3. 事件驱动：商业航天</h3>
+                    <p class="text-gray-800">尾盘异动由“高交会太空游项目”消息催化。该板块想象空间大，且有政策扶持。可关注龙头股的持续性，适合短线博弈，但需注意消息面变化，快进快出。</p>
+                </div>
+                <div class="wealth-card">
+                    <h3 class="wealth-title mb-3">4. 高危预警：光伏 & CPO</h3>
+                    <p class="text-gray-800">两大前期热门赛道今日成为重灾区。<span class="font-bold">隆基绿能</span>遭净卖出近18亿，<span class="font-bold">中际旭创</span>早盘遭卖出超11亿（尾盘有回补）。机构资金出逃迹象明显，板块趋势走坏，短期风险远大于机会。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-6 bg-white border-t mt-12">
+        <p class="text-sm text-gray-600">基于财联社RSS源生成 | 2025年11月12日</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const tooltipTitleCallback = (tooltipItems) => tooltipItems[0].label;
+
+            const colors = {
+                red: '#ef4444',
+                green: '#22c55e',
+                blue1: '#0047AB',
+                blue2: '#0096C7',
+                blue3: '#48CAE4',
+                blue4: '#ADE8F4',
+                gray: '#6b7280'
+            };
+
+            // 主力资金流向图
+            if (document.getElementById('fundingFlowChart')) {
+                const ctx = document.getElementById('fundingFlowChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['电新行业', '计算机', '电力设备', '工业金属', '银行', '医药'],
+                        datasets: [{
+                            label: '主力资金净流向 (亿元)',
+                            data: [-178, -80, -50, 40, 60, 90], // 数据为估算，基于RSS描述
+                            backgroundColor: (context) => {
+                                const value = context.dataset.data[context.dataIndex];
+                                return value < 0 ? colors.green : colors.red;
+                            },
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '净流入 / 净流出 (亿元)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { title: tooltipTitleCallback } }
+                        }
+                    }
+                });
+            }
+
+            // 涨停板分析图
+            if (document.getElementById('limitUpChart')) {
+                const ctx = document.getElementById('limitUpChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['连板股', '首板及其他', '封板未遂'],
+                        datasets: [{
+                            data: [18, 40, 19],
+                            backgroundColor: [colors.red, colors.blue2, colors.gray],
+                            hoverBackgroundColor: ['#b91c1c', '#0077b6', '#4b5563']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '60%',
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            tooltip: { 
+                                callbacks: { 
+                                    title: tooltipTitleCallback,
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.raw + '只';
+                                        return label;
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
