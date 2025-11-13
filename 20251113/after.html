@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日看盘 - 2025年11月13日</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 340px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+            }
+        }
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+            padding-left: 2.5rem;
+            border-left: 2px solid #ADE8F4;
+        }
+        .timeline-item:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
+        .timeline-marker {
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #0096C7;
+            border: 2px solid #f8f9fa;
+        }
+        .timeline-time { font-size: 0.875rem; font-weight: 600; color: #0047AB; }
+        .timeline-content { font-size: 1rem; color: #333; }
+        .text-up { color: #d90429; }
+        .text-down { color: #008000; }
+        .wealth-card {
+            background-color: #fff8e1;
+            border: 1px solid #ffe57f;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .wealth-card:hover {
+            box-shadow: 0 6px 12px rgba(255, 203, 7, 0.3);
+            transform: translateY(-3px);
+        }
+        .wealth-title { font-size: 1.25rem; font-weight: 700; color: #b7791f; }
+        .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 0.5rem; background: #e3f2fd; color: #1565c0; font-size: 0.75rem; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<header class="bg-white shadow-sm">
+    <div class="container mx-auto px-6 py-6 text-center">
+        <h1 class="text-3xl font-bold" style="color: #0047AB;">每日看盘：2025年11月13日</h1>
+        <p class="text-lg text-gray-600 mt-2">沪指刷新十年新高，锂电产业链全线爆发，阿里云与储能午后共振</p>
+        <div class="mt-3">
+            <span class="badge">涨停数: 85</span>
+            <span class="badge">连板股: 18</span>
+            <span class="badge">炸板率: ≈39%</span>
+            <span class="badge">成交额: 2.04万亿</span>
+        </div>
+    </div>
+</header>
+
+<main class="container mx-auto px-6 py-8">
+
+    <section id="kpi" class="mb-10">
+        <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">今日市场概览</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="stat-card text-center">
+                <div class="text-4xl font-bold" style="color: #d90429;">+0.73%</div>
+                <div class="text-lg font-medium text-gray-700 mt-2">沪指收盘</div>
+                <p class="text-sm text-gray-500">刷新十年新高，量价齐升</p>
+            </div>
+            <div class="stat-card text-center">
+                <div class="text-4xl font-bold" style="color: #0047AB;">2.04万亿</div>
+                <div class="text-lg font-medium text-gray-700 mt-2">两市成交额</div>
+                <p class="text-sm text-gray-500">较前一交易日放量969亿</p>
+            </div>
+            <div class="stat-card text-center">
+                <div class="text-4xl font-bold" style="color: #008000;">+2.55%</div>
+                <div class="text-lg font-medium text-gray-700 mt-2">创业板指收盘</div>
+                <p class="text-sm text-gray-500">新能源与科技双轮驱动</p>
+            </div>
+            <div class="stat-card text-center">
+                <div class="text-4xl font-bold">67%</div>
+                <div class="text-lg font-medium text-gray-700 mt-2">封板率（不含ST/退市）</div>
+                <p class="text-sm text-gray-500">41股封板未遂，午后分歧加大</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="charts" class="mb-10">
+        <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">关键数据可视化</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <div class="stat-card">
+                <h3 class="text-xl font-semibold mb-4 text-center">主力资金板块流向</h3>
+                <p class="text-sm text-gray-700 mb-4 text-center">有色金属、电新、基础化工净流入；医药、计算机、建筑工程净流出</p>
+                <div class="chart-container">
+                    <canvas id="fundingFlowChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <h3 class="text-xl font-semibold mb-4 text-center">涨停结构（连板 vs 首板）</h3>
+                <p class="text-sm text-gray-700 mb-4 text-center">连板股18只，晋级率57.89%；首板约67只，午后炸板率上升</p>
+                <div class="chart-container" style="height:340px; max-height:340px;">
+                    <canvas id="limitUpStructureChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <h3 class="text-xl font-semibold mb-4 text-center">三大指数日内走势（示意）</h3>
+                <p class="text-sm text-gray-700 mb-4 text-center">沪指震荡走强、深成指与创业板指午后扩大涨幅</p>
+                <div class="chart-container">
+                    <canvas id="indicesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <h3 class="text-xl font-semibold mb-4 text-center">热点板块强度</h3>
+                <p class="text-sm text-gray-700 mb-4 text-center">锂电产业链最强，阿里云、储能、商业航天、贵金属等轮动活跃</p>
+                <div class="chart-container">
+                    <canvas id="hotTopicsChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="timeline" class="mb-10">
+        <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">盘面时间线</h2>
+        <div class="stat-card">
+            <div class="max-w-3xl mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">09:40</div>
+                    <div class="timeline-content">创业板指涨逾1%，锂电产业链掀起涨停潮，天赐材料等多股涨停</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">10:12</div>
+                    <div class="timeline-content">商业航天延续强势，上海沪工5天3板；中国可回收火箭“朱雀三号”月中首飞</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">10:26</div>
+                    <div class="timeline-content">储能概念走强，上能电气触及20cm涨停；政策推动水风光一体化基地</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">11:20</div>
+                    <div class="timeline-content">可控核聚变概念拉升，永鼎股份触及涨停；ITER关键系统通过设计评审</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">11:32</div>
+                    <div class="timeline-content">午评：创业板指半日涨超2%，宁德时代涨超8%逼近历史新高</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">14:03</div>
+                    <div class="timeline-content">短线情绪小幅分化，炸板率攀升，锂电方向出现分歧；天际股份巨震</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">14:47</div>
+                    <div class="timeline-content">储能持续走强，海博思创20cm涨停创历史新高；与宁德时代签200GWh采购协议</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">14:50</div>
+                    <div class="timeline-content">阿里云概念尾盘异动，数据港直线涨停；阿里秘密启动“千问”项目</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">15:02</div>
+                    <div class="timeline-content">收评：沪指涨0.73%刷新十年新高，全市场104只个股涨停</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="suggestions" class="mb-10">
+        <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #0096C7;">今日操作建议</h2>
+        <div class="stat-card">
+            <ul class="list-disc list-inside space-y-3 text-gray-800 text-lg">
+                <li><strong>拥抱主线：</strong> 锂电—储能—上游有色形成完整链条，宁德时代放量强攻，产业链上游（资源、材料）与中游（电池、设备）具备延续性。</li>
+                <li><strong>关注新主线延伸：</strong> 阿里云与AI应用尾盘发力，数据港、奥飞数据等可跟踪；同时AI能耗与电力侧逻辑强化，液冷IDC与电网设备受资金关注。</li>
+                <li><strong>题材轮动应对：</strong> 玄学/地图/美好寓意等题材较活跃但节奏快、控制仓位；商业航天与可控核聚变有消息驱动，适合快进快出。</li>
+                <li><strong>风险控制：</strong> 午后炸板率走高、连板晋级率在58%附近，分歧加大；不追高缩量连板，优先把握放量换手的低位龙头或趋势中军。</li>
+                <li><strong>资金流向指引：</strong> 有色金属净流入居前（>95亿），电新、化工承接良好；避开医药、计算机等流出板块的弱反弹。</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="wealth-code" class="mb-10">
+        <h2 class="text-2xl font-semibold mb-6 text-center" style="color: #b7791f;">财富密码 🚀</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="wealth-card">
+                <h3 class="wealth-title mb-3">1. 锂电—储能强链延链</h3>
+                <p class="text-gray-800">
+                    全市场近40只锂电概念涨停或涨超10%，孚日股份6连板，国城矿业4天3板，宁德时代涨超7%逼近新高；海博思创与宁德签订2026-2028年200GWh采购。策略：优先上游资源（锂、镍、磷）与中游材料（电解液、隔膜）及储能系统，龙头用均线跟随，避开尾盘缩量加速。
+                </p>
+            </div>
+            <div class="wealth-card">
+                <h3 class="wealth-title mb-3">2. 阿里云/AI应用与电力侧</h3>
+                <p class="text-gray-800">
+                    阿里“千问”APP对标ChatGPT，港股阿里巴巴午后涨幅扩大至5%，阿里云概念尾盘异动，数据港直线涨停。AI能耗与液冷IDC受益于散热升级（摩根士丹利预计冷却组件价值提升）。策略：跟踪云基建、液冷、服务器散热与数据中心REITs；AI应用端关注有明确产品迭代与落地路径的公司。
+                </p>
+            </div>
+            <div class="wealth-card">
+                <h3 class="wealth-title mb-3">3. 商业航天与可控核聚变</h3>
+                <p class="text-gray-800">
+                    商业航天延续强势，上海沪工5天3板；可控核聚变概念盘中拉升，永鼎股份触及涨停，ITER朗缪尔探针系统通过关键评审。策略：事件驱动+技术突破双轮驱动，适合低吸埋伏与消息兑现卖出，波段为主。
+                </p>
+            </div>
+            <div class="wealth-card">
+                <h3 class="wealth-title mb-3">4. 有色与贵金属的补涨与避险</h3>
+                <p class="text-gray-800">
+                    有色金属板块主力资金净流入超95亿，盛屯矿业涨停，国际金价走强带动黄金股活跃。策略：配置锂矿/铜/铝等与新能源链条重叠的品种，同时关注黄金股作为不确定环境的防御仓位。
+                </p>
+            </div>
+            <div class="wealth-card">
+                <h3 class="wealth-title mb-3">5. 地图/玄学题材快节奏</h3>
+                <p class="text-gray-800">
+                    “三字辈”“马字辈”“美好寓意”等玄学与地图行情升温，合富中国13天12板、三木集团9天6板、三元股份4连板。策略：只做强势换手龙头与低位补涨的首板，避免连板高位缩量追涨，设置止盈止损。
+                </p>
+            </div>
+            <div class="wealth-card">
+                <h3 class="wealth-title mb-3">6. 大消费与区域主题</h3>
+                <p class="text-gray-800">
+                    大消费活跃（步步高等涨停），福建板块持续走强（厦工股份、中国武夷等），政策预期与资金偏好共振。策略：区域+政策+业绩三因素择股，波段操作，跟踪资金回流持续性。
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="text-center py-6 bg-white border-t mt-12">
+    <p class="text-sm text-gray-600">基于财联社RSS源与盘面跟踪生成 · 仅供研究参考，不构成投资建议</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tooltipTitleCallback = function(tooltipItems) {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        if (Array.isArray(label)) {
+            return label.join(' ');
+        } else {
+            return label;
+        }
+    };
+
+    const processLabels = (labels, maxLen = 16) => {
+        return labels.map(label => {
+            if (typeof label === 'string' && label.length > maxLen) {
+                let words = label.split(/\s+/);
+                let lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxLen) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            }
+            return label;
+        });
+    };
+
+    const colors = {
+        blue1: '#0047AB',
+        blue2: '#0096C7',
+        blue3: '#48CAE4',
+        blue4: '#ADE8F4',
+        blue5: '#CAF0F8',
+        red: '#d90429',
+        green: '#008000'
+    };
+
+    // 1) 主力资金板块流向
+    if (document.getElementById('fundingFlowChart')) {
+        const ctx = document.getElementById('fundingFlowChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: processLabels(['有色金属', '电新', '基础化工', '医药', '计算机', '建筑工程']),
+                datasets: [{
+                    label: '主力资金净流向 (亿元)',
+                    data: [95.0, 71.0, 25.0, -15.0, -20.0, -18.0],
+                    backgroundColor: (context) => {
+                        const value = context.dataset.data[context.dataIndex];
+                        return value < 0 ? colors.green : colors.blue1;
+                    },
+                    borderColor: (context) => {
+                        const value = context.dataset.data[context.dataIndex];
+                        return value < 0 ? colors.green : colors.blue1;
+                    },
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        title: { display: true, text: '净流入 / 净流出 (亿元)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
+    }
+
+    // 2) 涨停结构（连板 vs 首板）
+    if (document.getElementById('limitUpStructureChart')) {
+        const ctx = document.getElementById('limitUpStructureChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['连板股', '首板'],
+                datasets: [{
+                    data: [18, 67],
+                    backgroundColor: [colors.blue1, colors.blue3],
+                    hoverBackgroundColor: [colors.blue2, colors.blue4]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '62%',
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
+    }
+
+    // 3) 三大指数走势（示意）
+    if (document.getElementById('indicesChart')) {
+        const ctx = document.getElementById('indicesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['09:30', '10:00', '10:30', '11:00', '11:30', '13:00', '13:30', '14:00', '14:30', '15:00'],
+                datasets: [
+                    {
+                        label: '沪指',
+                        data: [0.05, 0.17, 0.36, 0.44, 0.44, 0.48, 0.55, 0.60, 0.68, 0.73],
+                        borderColor: colors.red,
+                        backgroundColor: 'rgba(217, 4, 41, 0.1)',
+                        tension: 0.25
+                    },
+                    {
+                        label: '深成指',
+                        data: [0.20, 0.77, 1.20, 1.50, 1.80, 1.70, 1.75, 1.80, 1.85, 1.78],
+                        borderColor: colors.blue2,
+                        backgroundColor: 'rgba(0, 150, 199, 0.1)',
+                        tension: 0.25
+                    },
+                    {
+                        label: '创业板指',
+                        data: [0.40, 1.00, 1.70, 2.10, 2.68, 2.50, 2.60, 2.65, 2.70, 2.55],
+                        borderColor: colors.blue1,
+                        backgroundColor: 'rgba(0, 71, 171, 0.1)',
+                        tension: 0.25
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                },
+                scales: {
+                    y: {
+                        title: { display: true, text: '涨跌幅 (%)' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // 4) 热点板块强度
+    if (document.getElementById('hotTopicsChart')) {
+        const ctx = document.getElementById('hotTopicsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: processLabels(['锂电', '储能', '阿里云/AI应用', '商业航天', '可控核聚变', '贵金属']),
+                datasets: [{
+                    label: '板块热度 (1-10)',
+                    data: [10, 9, 8, 7, 6, 7],
+                    fill: true,
+                    backgroundColor: 'rgba(72, 202, 228, 0.2)',
+                    borderColor: colors.blue2,
+                    pointBackgroundColor: colors.blue2,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: colors.blue2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: { stepSize: 2 }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>	
